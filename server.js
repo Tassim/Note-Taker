@@ -17,6 +17,11 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Routes
+//  return the `index.html` file (* it's like a if statement, has to be last)
+app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "/public/index.html"));
+});
+
 // return the `notes.html` file
 app.get("/notes", function(req, res) {
     res.sendFile(path.join(__dirname,"/public/notes.html"));
@@ -66,10 +71,11 @@ app.delete("/api/notes/:id", function(req, res) {
     });
 });
 
-//  return the `index.html` file (* it's like a if statement, has to be last)
-app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "/public/index.html"));
-});
+// //  return the `index.html` file (* it's like a if statement, has to be last)
+// app.get("*", function(req, res) {
+//     res.sendFile(path.join(__dirname, "/public/index.html"));
+// });
+
 
 // Starts the server to begin listening
 // =============================================================
