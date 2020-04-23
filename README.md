@@ -17,4 +17,4 @@ For users that need to keep track of a lot of information, it's easy to forget o
 ![screenshot1](./public/assets/img/screenSHot1.png)
 ![screenshot1](./public/assets/img/screenShot2.png)
 
-![Link to: Note Taker](https://tassim.github.io/homework9/)
+![Link to: Note Taker](https://fast-tundra-61658.herokuapp.com/notes)
