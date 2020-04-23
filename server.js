@@ -8,7 +8,7 @@ let database = require("./db/db.json");
 
 // Sets up the Express App
 const app = express();
-const PORT = 3003;
+const PORT = process.env.PORT || 3001;
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
@@ -18,9 +18,9 @@ app.use(express.static("public"));
 
 // Routes
 //  return the `index.html` file (* it's like a if statement, has to be last)
-app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "/public/index.html"));
-});
+// app.get("/", function(req, res) {
+//     res.sendFile(path.join(__dirname, "/public/index.html"));
+// });
 
 // return the `notes.html` file
 app.get("/notes", function(req, res) {
@@ -33,7 +33,7 @@ app.get("/api/notes", function(req, res) {
         if (err) throw err;
         let notes = JSON.parse(data);
         console.log(notes);
-        return res.json(notes);
+        res.json(notes);
     })
     // return res.json(database);
 });
@@ -43,13 +43,16 @@ app.post("/api/notes", function(req, res) {
     let newNote = req.body;
     // generates a unique id for each note to be used on the delete call
     newNote.id = uniqid();
-    database.push(newNote);
-    fs.writeFile(databasePath, JSON.stringify(database), (err) => {
+    fs.readFile(databasePath, (err, data) => {
         if (err) throw err;
-        console.log("New note succefully wrote to the file!");
-        res.status(200);
+        let notes = JSON.parse(data);
+        notes.push(newNote);
+        fs.writeFile(databasePath, JSON.stringify(notes), (err) => {
+            if (err) throw err;
+            console.log("New note succefully wrote to the file!");
+            res.json(newNote);
+        })
     })
-    console.log(newNote);
 });
 
 // receive a query parameter containing the id of a note to delete
@@ -66,15 +69,15 @@ app.delete("/api/notes/:id", function(req, res) {
         fs.writeFile(databasePath, JSON.stringify(notes), (err) => {
             if (err) throw err;
             console.log("Note succefully deleted from file!");
-            res.status(200);
+            res.json( {ok: true} );
         });
     });
 });
 
 // //  return the `index.html` file (* it's like a if statement, has to be last)
-// app.get("*", function(req, res) {
-//     res.sendFile(path.join(__dirname, "/public/index.html"));
-// });
+app.get("*", function(req, res) {
+    res.sendFile(path.join(__dirname, "/public/index.html"));
+});
 
 
 // Starts the server to begin listening
