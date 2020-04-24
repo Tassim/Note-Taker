@@ -14,7 +14,7 @@ The application is really helpful to any user that wants to organize thoughts an
 
 For users that need to keep track of a lot of information, it's easy to forget or be unable to recall something important. Being able to take persistent notes allows users to have written information available when needed.
 
-![screenshot](./public/assets/img/screenSHot1.png)
+![screenshot](./public/assets/img/screenSHot.png)
 ![screenshot](./public/assets/img/screenShot2.png)
 
 [Link to: Note Taker](https://fast-tundra-61658.herokuapp.com/notes)
